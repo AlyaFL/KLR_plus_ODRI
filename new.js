@@ -74,10 +74,15 @@ function clean_detail(n){
       count_routes = 9;
     }
     for (let i = 0; i < count_routes; i++) {
-      new_var = "ul" + i
+      new_var = "ul" + i;
+      new_var1 = "dis_ul" + i;
       const list = document.getElementById(new_var);
+      const list1 = document.getElementById(new_var1);
       while (list.hasChildNodes()) {
         list.removeChild(list.firstChild);
+      }
+      while (list1.hasChildNodes()) {
+        list1.removeChild(list1.firstChild);
       }
     }
 }
@@ -85,9 +90,19 @@ function clean_detail(n){
 function clean_detail_odri(n){
   for (let i = 0; i < n; i++) {
   new_var = "ul" + i;
+  new_dis = "dis_ul" + i;
+  new_info = 'dop_info0';
   const list = document.getElementById(new_var);
+  const list_1 = document.getElementById(new_dis);
+  const list_2 = document.getElementById(new_info);
   while (list.hasChildNodes()) {
     list.removeChild(list.firstChild);
+  }
+  while (list_1.hasChildNodes()) {
+    list_1.removeChild(list_1.firstChild);
+  }
+  while (list_2.hasChildNodes()) {
+    list_2.removeChild(list_2.firstChild);
   }
 }
 }
@@ -102,28 +117,62 @@ function get_details(n){
   for (let i = 0; i < count_routes; i++) {
     let klr = Object.values(n.items)[i];
     let timetable = klr.timetable;
+    let discounts = klr.discounts;
+    let count_discounts = Object.values(discounts).length;
     let count_cities = Object.values(timetable).length;
-
+    let transfer = '';
     let som = "ul" + i;
     for (let j=0; j<count_cities; j++){
-      let city_address =timetable[j].title +", " + timetable[j].address;
+      let city_address ='';
+      if (timetable[j].transfer_point == true){
+        transfer = ' (Можлива пересадка) ';
+      } else {
+        transfer = '';
+      }
+      
       let city_time = timetable[j].datetime + " ";
       let t_index = city_time.indexOf(":");
       city_time = city_time.slice(t_index-2,);
+      const para_li = document.createElement("li");
+      const para_strong = document.createElement("strong");
+      const para_i = document.createElement("span");
+      para_i.setAttribute("id", "para_i");
+      para_i.setAttribute("style", "color:#ff6800;font-weight:bold;font-style:italic;");
+      //para_i.setAttribute("style", ");
+      
+      const node_time = document.createTextNode(city_time);
+      const node_city = document.createTextNode(timetable[j].title+', ');
+      const node_transfer = document.createTextNode(transfer);
+      const node_address = document.createTextNode(timetable[j].address);
+      
+      para_li.appendChild(para_strong);
+      para_strong.appendChild(node_time);
+      para_li.appendChild(node_city);
+      para_li.appendChild(para_i);
+      
+      para_i.appendChild(node_transfer);
+      
+      para_li.appendChild(node_address);
+
+      const element = document.getElementById(som);
+      const child = document.getElementById("li");
+      element.insertBefore(para_li, child);
+      }
+    som = "dis_ul" + i;
+    for (let j=0; j<count_discounts; j++){
+      let percent_title = discounts[j].value +'%'+' - '+discounts[j].title;
+      if ( discounts[j].title.indexOf('Групова') == 0 || discounts[j].title.indexOf('студент') == 0){
+        percent_title = '';
+      }
       const para = document.createElement("li");
-      const para1 = document.createElement("strong");
-      para.appendChild(para1);
-      const node = document.createTextNode(city_time);
-      para1.appendChild(node);
-      
-      const node1 = document.createTextNode(city_address);
-      para.appendChild(node1);
-      
-      
+      if (percent_title != ''){
+        const node = document.createTextNode(percent_title);
+      para.appendChild(node);
       const element = document.getElementById(som);
       const child = document.getElementById("li");
       element.insertBefore(para, child);
-      }
+      } 
+    }
   }
 }
 
@@ -174,7 +223,7 @@ function klr_get_data(n){
       som = "start_date"+i;
       document.getElementById(som).innerHTML = klr.start_date;
       som = "carrier_name"+i;
-      document.getElementById(som).innerHTML = klr.carrier_name;
+      document.getElementById(som).innerHTML ='Перевізник: ' + klr.carrier_name;
       som = "start_city_name"+i;
       document.getElementById(som).innerHTML = klr.start_city_name;
       som = "end_city_name"+i;
@@ -226,27 +275,168 @@ const find_klr = async (first_word, second_word, date_form, currency,t_k) => {
   var search_request = await sendReq('GET', new_link, t_k);
 
   console.log(search_request);
-  klr_get_data(search_request);
+  if (search_request.count == 0){
+    hide_info();
+    document.getElementById("rec553549662").hidden=false;
+  } else {
+    document.getElementById("rec553549662").hidden=true;
+    klr_get_data(search_request);
   get_details(search_request);
+  }
 }
 
-function show_detail_odri(curr,trip_id, from_city_id, to_city_id){
-  let body = {
-    currecny_code: curr, 
-    trip_id: trip_id, 
-    from_city_id: from_city_id, 
-    to_city_id: to_city_id, 
-    load_transporation_rules: true}
+function add_altrans_dis(){
+  let para = document.createElement("li");
+  let node = document.createTextNode('50% - Діти до 4 років');
+  para.appendChild(node);
+  let element = document.getElementById("dis_ul0");
+  let child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("li");
+  node = document.createTextNode('30% - Діти від 4 до 12 років');
+  para.appendChild(node);
+  element = document.getElementById("dis_ul0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+}
+
+function add_grandes_dis(){
+  let para = document.createElement("li");
+  let node = document.createTextNode('50% - Діти до 4 років');
+  para.appendChild(node);
+  let element = document.getElementById("dis_ul0");
+  let child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("li");
+  node = document.createTextNode('30% - Діти від 4 до 12 років');
+  para.appendChild(node);
+  element = document.getElementById("dis_ul0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("li");
+  node = document.createTextNode('10% - Пенсіонери від 60 років');
+  para.appendChild(node);
+  element = document.getElementById("dis_ul0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+}
+
+function add_altrans_info(){
+  let para = document.createElement("p");
+  para.setAttribute("style", "text-align: left");
+  let node = document.createTextNode('У вартість повного (дорослого) квитка входить безкоштовне перевезення багажу розміром до 40x60x80см,'+
+  'загальною вагою до 30кг та ручного багажу вагою до 10кг. У вартість пільгового (дитячого) квитка'+
+  'входить безкоштовне перевезення багажу загальною вагою до 20кг.'+
+  'При перевищенні даних лімітів щодо ваги і розмірів багажу за нього сплачується по 1 євро/кг.'+
+  'Додатковий багаж перевозиться лише при наявності вільного місця в багажному відділенні автобуса.'+
+  'Додатковий багаж не повинен перевищувати розмірів та ваги основного багажу.');
+  para.appendChild(node);
+  let element = document.getElementById("dop_info0");
+  let child = document.getElementById("p");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("p");
+  para.setAttribute("style", "text-align: left");
+  node = document.createTextNode('Перевізник не відповідає за запізнення під час руху і несвоєчасність прибуття до станцій слідування,'+
+  'якщо це спричинилося незалежними від нього обставинами (в тому числі затримки під час проходження кордонів,'+
+  'погодними умовами, транспортними пробками, діями державних органів, ремонтними роботами на дорогах і т.д,'+
+  'діями самих пасажирів, що впливали на виконання даних обставин) та іншими причинами (технічними проблемами,'+
+  'що виникли з автобусом під час руху, котрі не могли бути попереджені фірмою-перевізником,'+
+  'не зважаючи на всі прийняті засоби застереження).');
+  para.appendChild(node);
+  element = document.getElementById("dop_info0");
+  child = document.getElementById("p");
+  element.insertBefore(para, child);
+}
+
+function add_grandes_info(){
+  let para = document.createElement("p");
+  para.setAttribute("style", "text-align: left");
+  let node = document.createTextNode('  Кожен пасажир має право на перевезення багажу загальною вагою до 40 кг на 1 особу (не більше 2 валіз)'+
+  'та ручного багажу вагою до 10 кг. При перевищенні даних лімітів щодо ваги за багаж береться доплата'+
+  'як за додатковий багаж по 1.2 євро за кожен додатковий кілограм.'+
+  'Додатковий багаж перевозиться при наявності вільного місця в багажному відділенні автобуса та не повинен'+
+  'перевищувати розмірів та ваги основного багажу.');
+  para.appendChild(node);
+  let element = document.getElementById("dop_info0");
+  let child = document.getElementById("p");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("p");
+  para.setAttribute("style", "text-align: left");
+  node = document.createTextNode('  Перевізник не відповідає за запізнення під час руху і несвоєчасність прибуття до станцій слідування,'+
+  'якщо це спричинилося незалежними від нього обставинами (в тому числі затримки під час проходження кордонів,'+
+  'погодними умовами, транспортними пробками, діями державних органів, ремонтними роботами на дорогах і т.д,'+
+  'діями самих пасажирів, що впливали на виконання даних обставин) та іншими причинами (технічними проблемами,'+
+  'що виникли з автобусом під час руху, котрі не могли бути попереджені фірмою-перевізником,'+
+  'не зважаючи на всі прийняті засоби застереження).');
+  para.appendChild(node);
+  element = document.getElementById("dop_info0");
+  child = document.getElementById("p");
+  element.insertBefore(para, child);
+}
+
+function show_detail_odri(response_odri){
+  let para = document.createElement("li");
+  let para1 = document.createElement("strong");
+  para.appendChild(para1);
+  let dep_time = response_odri.departure_time_hhmm + " ";
+  let node = document.createTextNode(dep_time);
+  para1.appendChild(node);
+  let city_address = response_odri.departure_city + ', ' + response_odri.departure_place;
+  let node1 = document.createTextNode(city_address);
+  para.appendChild(node1);
+  
+  let element = document.getElementById("ul0");
+  let child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // ------------------------------
+  para = document.createElement("li");
+  para1 = document.createElement("strong");
+  para.appendChild(para1);
+  node = document.createTextNode('');
+  para1.appendChild(node);
+  city_address = "Львів або Стрий - Можлива пересадка";
+  node1 = document.createTextNode(city_address);
+  para.appendChild(node1);
+  
+  element = document.getElementById("ul0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // -------------------------------------------
+  para = document.createElement("li");
+  para1 = document.createElement("strong");
+  para.appendChild(para1);
+  let ar_time = response_odri.arrival_time_hhmm + " ";
+  node = document.createTextNode(ar_time);
+  para1.appendChild(node);
+  let city_address_ar = response_odri.arrival_city + ', ' + response_odri.arrival_place;
+  node1 = document.createTextNode(city_address_ar);
+  para.appendChild(node1);
+  
+  element = document.getElementById("ul0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+  if (response_odri.carrier_name =="AL-TRANS"){
+    add_altrans_dis();
+    add_altrans_info();
+  } else if(response_odri.carrier_name =="GRANDES TOUR"){
+    add_grandes_dis();
+    add_grandes_info();
+  }
 }
 
 function show_info_odri(resp, curr){
   document.getElementById("show0").hidden=false;
   document.getElementById("start_date0").innerHTML = resp.departure_date;
-  document.getElementById("carrier_name0").innerHTML = resp.carrier_name;
+  document.getElementById("carrier_name0").innerHTML = 'Перевізник: ' + resp.carrier_name;
   document.getElementById("start_city_name0").innerHTML = resp.departure_city;
   document.getElementById("end_city_name0").innerHTML = resp.arrival_city;
-  document.getElementById("start_time0").innerHTML = resp.departure_time;
-  document.getElementById("end_time0").innerHTML = resp.arrival_time;
+  document.getElementById("start_time0").innerHTML = resp.departure_time_hhmm;
+  document.getElementById("end_time0").innerHTML = resp.arrival_time_hhmm;
   document.getElementById("end_date0").innerHTML = resp.arrival_date;
   let price = resp.price;
   document.getElementById("price0").innerHTML = price.toString() + " " + curr;
@@ -286,9 +476,15 @@ const find_odri = async (first_word, second_word, date_form, currency,t_o) => {
   "days_count_limit":1,
   "return_only_dates":false}
   var req = await sendReq_o('POST', search_city, t_o, body);
-  response_odri = req.trips_sequences[0].trips[0];
-  console.log(response_odri);
-  show_info_odri(response_odri, currency);
+  try{
+    response_odri = req.trips_sequences[0].trips[0];
+    console.log(response_odri);
+    show_info_odri(response_odri, currency);
+    show_detail_odri(response_odri);
+    document.getElementById("rec553549662").hidden=true;
+  } catch (e){
+    document.getElementById("rec553549662").hidden=false;
+  }
   
 }
 

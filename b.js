@@ -41,21 +41,15 @@ const getToken_k = (method, url, body = null) => {
 
 const getToken_o = (method, url, body = null) => {
     const headers_1 = {
-      'access-control-allow-origin': '*',
-      'content-type': 'application/json; charset=utf-8',
-      'access-control-allow-headers': 'Content-Type',
-      'Api-Key':'vmuRLTyVnU+5KWbl9FPjqQ==',
-      'accept': 'application/json',
-      'accept-encoding': 'gzip, deflate, br',
-      'accept-language': 'uk',
-      'content-type': 'application/json'
+      'accept': 'text/plain',
+      'Api-Key': 'vmuRLTyVnU+5KWbl9FPjqQ==',
+      'Content-Type': 'application/json-patch+json'
     }
   
     return fetch(url, {
       method: method,
       body: JSON.stringify(body),
       headers: headers_1,
-      //mode:'no-cors'
     })
     .then(response => {
       if (response.ok) {
@@ -76,12 +70,10 @@ const body_k= {
     "email": enc_dec(lk),
     "password": enc_dec(pk)
 }
-
 const body_o= {
   "email": "zakaz-biletov@ukr.net",
   "password": "mykola2022"
 }
-
 // const body_o= {
 //     "email": enc_dec(lo),
 //     "password": enc_dec(po)
