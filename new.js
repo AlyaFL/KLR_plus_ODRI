@@ -187,6 +187,34 @@ function hide_info(){
   }
 }
 
+function first_klr_info(){
+  const list = document.getElementById("dop_info0");
+  while (list.hasChildNodes()) {
+    list.removeChild(list.firstChild);
+  }
+  let para = document.createElement("li");
+  let node = document.createTextNode('Періодичність - майже щодня');
+  para.appendChild(node);
+  let element = document.getElementById("dop_info0");
+  let child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("li");
+  node = document.createTextNode('Доступний багаж Не більше 2 сумок, розм: 40*60*90 см (загальна вага: Польща - 30 кг; Німеччина - 40 кг) + ручна поклажа 5 кг');
+  para.appendChild(node);
+  element = document.getElementById("dop_info0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // --------------------------------
+  para = document.createElement("li");
+  node = document.createTextNode('Виїзд та прибуття за місцевим часом');
+  para.appendChild(node);
+  element = document.getElementById("dop_info0");
+  child = document.getElementById("li");
+  element.insertBefore(para, child);
+  // document.getElementById("dop_info0");
+}
+
 function klr_get_data(n){
     hide_info();
     let count_routes = Object.values(n)[0];
@@ -281,6 +309,7 @@ const find_klr = async (first_word, second_word, date_form, currency,t_k) => {
   } else {
     document.getElementById("rec553549662").hidden=true;
     klr_get_data(search_request);
+    first_klr_info();
   get_details(search_request);
   }
 }
