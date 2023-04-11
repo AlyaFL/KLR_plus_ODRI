@@ -309,7 +309,7 @@ const find_klr = async (first_word, second_word, date_form, currency,t_k) => {
   } else {
     document.getElementById("rec553549662").hidden=true;
     klr_get_data(search_request);
-    first_klr_info();
+    add_klr_info();
   get_details(search_request);
   }
 }
@@ -351,6 +351,21 @@ function add_grandes_dis(){
   element = document.getElementById("dis_ul0");
   child = document.getElementById("li");
   element.insertBefore(para, child);
+}
+
+function add_klr_info(){
+  let para = document.createElement("p");
+  para.setAttribute("style", "text-align: left");
+  let node = document.createTextNode('У вартість квитка пасажиру дозволяється'+
+  'перевезти: не більше 2-х сумок/валіз, розміром 40×60×90 загальною вагою до 30 кг до Польщі, Чехії, Словаччини,'+
+  'Австрії. На маршрутах до Німеччини, Бельгії, Нідерландів, Люксембургу, Франції, Швейцарії до 40 кг, та ручна'+
+  'поклажа пасажирів до 5 кг. Наявність вільного місця для додаткового багажу у багажному відділенні '+
+  'автобуса та розмір доплати вирішується по факту на посадці. Додатковий багаж за розмірами та вагою не має перевищувати основний багаж');
+  para.appendChild(node);
+  let element = document.getElementById("dop_info0");
+  let child = document.getElementById("p");
+  element.insertBefore(para, child);
+  
 }
 
 function add_altrans_info(){
