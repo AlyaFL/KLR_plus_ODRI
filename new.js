@@ -161,7 +161,7 @@ function get_details(n){
     som = "dis_ul" + i;
     for (let j=0; j<count_discounts; j++){
       let percent_title = discounts[j].value +'%'+' - '+discounts[j].title;
-      if ( discounts[j].title.indexOf('Групова') == 0 || discounts[j].title.indexOf('студент') == 0){
+      if ( discounts[j].title.indexOf('Групова') == 0 || discounts[j].title.indexOf('студент') == 0 || discounts[j].title.indexOf('5%') == 0){
         percent_title = '';
       }
       const para = document.createElement("li");

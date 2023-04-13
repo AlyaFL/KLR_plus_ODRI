@@ -14,4 +14,4 @@ Disallow:
 
 
 Sitemap: http://demo-busticket.tilda.ws/sitemap.xml
-Host: demo-busticket.tilda.ws
+Host: busticket.info/
