@@ -2,7 +2,6 @@ var searchURL = 'https://api.klr.com.ua/api/info/get_cities?name=';
 var search_city = 'https://al-trans.com.ua/api/v2/booking/search_trips';
 const city_info_url ="https://al-trans.com.ua/api/v2/references/cities";
 
-
 function func(){
     document.getElementById('form').addEventListener('submit', function(e) {
       e.preventDefault(); 
@@ -112,7 +111,7 @@ function get_details(n){
   if (count_routes > 9){
     count_routes = 9;
   }
-  console.log(count_routes);
+  //console.log(count_routes);
   clean_detail(n);
   for (let i = 0; i < count_routes; i++) {
     let klr = Object.values(n.items)[i];
@@ -221,7 +220,7 @@ function klr_get_data(n){
     if (count_routes > 9){
       count_routes = 9;
     }
-    console.log(count_routes);
+    //console.log(count_routes);
     clean_detail(n);
     let shoe_string = "";
     for (let i = 0; i < count_routes; i++) {
@@ -302,7 +301,7 @@ const find_klr = async (first_word, second_word, date_form, currency,t_k) => {
   let new_link = get_search_string(first_id, second_id, date_form,currency_id)
   var search_request = await sendReq('GET', new_link, t_k);
 
-  console.log(search_request);
+  //console.log(search_request);
   if (search_request.count == 0){
     hide_info();
     document.getElementById("rec553549662").hidden=false;
@@ -495,7 +494,7 @@ const find_odri = async (first_word, second_word, date_form, currency,t_o) => {
   }
   var req = await sendReq_o('POST', city_info_url, t_o);
   city_array = req.cities;
-  console.log(city_array);
+  //console.log(city_array);
   const count_routes = Object.values(req)[0].length;
   let first_link = '';
   let second_link = '';
@@ -509,8 +508,11 @@ const find_odri = async (first_word, second_word, date_form, currency,t_o) => {
   }
   clean_detail_odri(9);
   hide_info();
-  console.log(first_link);
-  console.log(second_link);
+  //console.log(first_link);
+  //console.log(second_link);
+  let spain_city = ["Аліканте", "Альмерія", "Барселона", "Бенідорм", "Валенсія", "Жирона", "Кастельон де ла Плана", 
+  "Мадрид", "Малага", "Мурсія", "Севілія", "Таррагона"];
+
   let body= {"arrival_city_id":second_link,
   "departure_city_id":first_link,
   "depature_date":date_form,
@@ -522,12 +524,19 @@ const find_odri = async (first_word, second_word, date_form, currency,t_o) => {
   var req = await sendReq_o('POST', search_city, t_o, body);
   try{
     response_odri = req.trips_sequences[0].trips[0];
-    console.log(response_odri);
+    //console.log(response_odri);
     show_info_odri(response_odri, currency);
     show_detail_odri(response_odri);
     document.getElementById("rec553549662").hidden=true;
   } catch (e){
+    
+    if (spain_city.includes(first_word) || spain_city.includes(second_word)){
+      document.getElementById("not_found").innerHTML ='Рейси з України до Іспанії - вівторок, середа та четвер. У зворотньому напрямку з Іспанії до України - п’ятниця, субота та неділя. Будь ласка, оберіть відповідну дату, або зателефонуйте диспетчеру.';
+    } else {
+      document.getElementById("not_found").innerHTML ='Рейси з України до Італії та зворотньому напрямку відбуваються за певним графіком, до 4-х разів на тиждень. Будь ласка, оберіть іншу дату, або зателефонуйте диспетчеру.';
+    }
     document.getElementById("rec553549662").hidden=false;
+
   }
   
 }
@@ -552,7 +561,7 @@ function func() {
 
     if (cities_italy.includes(first_word) || cities_italy.includes(second_word)){
       find_odri(first_word, second_word, date_form, currency,t_o);     
-      console.log('Odri');
+      //console.log('Odri');
     } else {
         find_klr(first_word, second_word, date_form, currency,t_k);
     }

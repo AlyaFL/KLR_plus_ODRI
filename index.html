@@ -970,7 +970,7 @@
                               </div>
                            </div>
                            <div class="t-form__submit" style="vertical-align:top; padding-top: 30px;">
-                             <button id="search_button" type="submit" onclick="func()" class="t-submit" style="color:#ffffff;border:2px solid #ffffff;background-color:#0099b9;border-radius:30px; -moz-border-radius:30px; -webkit-border-radius:30px;font-family:Georgia;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);"><a href="#search_button" style="color:#ffffff;">пошук рейсу</a> </button>
+                             <button id="search_button" type="submit" onclick="func()" class="t-submit" style="color:#ffffff;border:2px solid #ffffff;background-color:#0099b9;border-radius:30px; -moz-border-radius:30px; -webkit-border-radius:30px;font-family:Georgia;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);"><a href="#search_button" style="color:#ffffff;" class="search_b">пошук рейсу</a></button>
                            </div>
                         </div>
                         <div class="t-form__errorbox-bottom">
@@ -1003,6 +1003,9 @@
                background-color: #ffffff !important; color: #0099b9 !important; border-color: #0099b9 !important; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1) !important; } 
                #rec531284812 .t-submit{
                -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+               }
+               .search_b:hover{
+                  background-color: #ffffff !important; color: #0099b9 !important;
                }
             </style>
             <style>#rec531284812 .t-btn[data-btneffects-first],
@@ -1105,7 +1108,7 @@
             <div class="t185" >
                <div class="t-container t-container_flex">
                   <div class="t-col t-col_flex t-col_6 t-prefix_2">
-                     <div class="t-text t-text_lg" style="font-size:16px;font-family:'Georgia';" field="text">На жаль, на обраний рейс / дату квитків не знайдено. Будь ласка, змініть параметри пошуку, або зателефонуйте диспетчеру.</div>
+                     <div class="t-text t-text_lg" style="font-size:16px;font-family:'Georgia';" field="text"><span id="not_found">На жаль, на обраний рейс / дату квитків не знайдено. Будь ласка, змініть параметри пошуку, або зателефонуйте диспетчеру.</span> </div>
                   </div>
                   <div class="t185__butwrapper t-col t-col_2 ">
                      <a href="tel:+380668083399" target="" class="t-btn t-btn_md " style="color:#ffffff;border:2px solid #ffffff;background-color:#ff6800;border-radius:30px; -moz-border-radius:30px; -webkit-border-radius:30px;font-family:Georgia;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);" data-btneffects-first="btneffects-ripple">
@@ -4657,7 +4660,7 @@
             <div class="t185">
                <div class="t-container t-container_flex">
                   <div class="t-col t-col_flex t-col_6 t-prefix_2">
-                     <div class="t-text t-text_lg" style="font-size:16px;font-family:'Georgia';" field="text">На жаль, на обраний рейс / дату квитків не знайдено. Будь ласка, змініть параметри пошуку, або зателефонуйте диспетчеру.</div>
+                     <div class="t-text t-text_lg" style="font-size:16px;font-family:'Georgia';" field="text" id="not_found">На жаль, на обраний рейс / дату квитків не знайдено. Будь ласка, змініть параметри пошуку, або зателефонуйте диспетчеру.</div>
                   </div>
                   <div class="t185__butwrapper t-col t-col_2 ">
                      <a href="tel:+380668083399" target="" class="t-btn t-btn_md " style="color:#ffffff;border:2px solid #ffffff;background-color:#ff6800;border-radius:30px; -moz-border-radius:30px; -webkit-border-radius:30px;font-family:Georgia;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);" data-btneffects-first="btneffects-ripple">
