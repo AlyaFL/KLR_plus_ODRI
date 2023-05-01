@@ -567,3 +567,24 @@ function func() {
     }
    
 }
+
+function choose(num){
+  
+  let som = "start_city_name" + num;
+  let start_city_name = document.getElementById(som).innerHTML;
+  let som_end = "end_city_name" + num;
+  let end_city_name = document.getElementById(som_end).innerHTML;
+
+  document.getElementById("label").innerHTML = start_city_name +" - "+end_city_name;
+
+  let departure_date = document.getElementById("start_date" + num).innerHTML;
+
+  let departure_time = document.getElementById("start_time" + num).innerHTML;
+  document.getElementById("departure_info").innerHTML = departure_date + ', '+ departure_time;
+  
+  document.getElementById("departure_address").innerHTML = document.getElementById("start_station"+num).innerHTML;
+
+  document.getElementById("arrival_info").innerHTML = document.getElementById("end_date" + num).innerHTML + ', '+ document.getElementById("end_time" + num).innerHTML;
+
+  document.getElementById("arrival_address").innerHTML = document.getElementById("end_station"+num).innerHTML;
+}
