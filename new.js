@@ -518,8 +518,12 @@ function show_info_odri(resp, curr){
   document.getElementById("start_time0").innerHTML = resp.departure_time_hhmm;
   document.getElementById("end_time0").innerHTML = resp.arrival_time_hhmm;
   document.getElementById("end_date0").innerHTML = resp.arrival_date;
-  let price = resp.price;
-  document.getElementById("price0").innerHTML = price.toString() + " " + curr;
+  let price = resp.price.toString();
+  let formattedString = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  if (curr == "UAH"){
+    curr = 'грн';
+  }
+  document.getElementById("price0").innerHTML = formattedString + " " + curr;
   document.getElementById("start_station0").innerHTML = resp.departure_place;
   document.getElementById("end_station0").innerHTML = resp.arrival_place;
   document.getElementById("time_in_road0").innerHTML = resp.duration_dd + ' д. ' + resp.duration_hh + ' год. ' + resp.duration_mm + ' хв.';
@@ -639,6 +643,10 @@ function choose(num){
   const selectElement = document.getElementById("input_1495810359387");
   let first_price = document.getElementById("price"+num).innerHTML;
   document.getElementById("sum").innerHTML = first_price;
+  price_currency = document.getElementById('currency').value;
+  if (price_currency == "UAH"){
+    price_currency = "грн";
+  }
   selectElement.addEventListener("change", function() {
     let dis_amount = 0;
     if (document.getElementById('input_1495810359387').value != "0"){
@@ -646,7 +654,9 @@ function choose(num){
       dis_amount = (document.getElementById('input_1495810359387').value).slice(0, 2);
       let percent = (100 - dis_amount)/100;
       let newStr = first_price.replace(/,/g, "");
-      document.getElementById("sum").innerHTML = parseFloat(newStr)*percent;
+      let new_price = (parseFloat(newStr)*percent).toString();
+      let formattedString = new_price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      document.getElementById("sum").innerHTML = formattedString + ' ' + price_currency;
     } else {
       document.getElementById('b_date').hidden = true;
       document.getElementById("sum").innerHTML = document.getElementById("price"+num).innerHTML;
