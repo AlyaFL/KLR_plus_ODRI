@@ -158,6 +158,11 @@ function get_details(n){
       element.insertBefore(para_li, child);
       }
     som = "dis_ul" + i;
+    let count = 0;
+    // document.getElementById("disc_0").hidden = true;
+    // document.getElementById("disc_1").hidden = true;
+    // document.getElementById("disc_2").hidden = true;
+    // document.getElementById("disc_3").hidden = true;
     for (let j=0; j<count_discounts; j++){
       let percent_title = discounts[j].value +'%'+' - '+discounts[j].title;
       if ( discounts[j].title.indexOf('Групова') == 0 || discounts[j].title.indexOf('студент') == 0 || discounts[j].title.indexOf('5%') == 0){
@@ -165,11 +170,17 @@ function get_details(n){
       }
       const para = document.createElement("li");
       if (percent_title != ''){
+        
         const node = document.createTextNode(percent_title);
       para.appendChild(node);
       const element = document.getElementById(som);
       const child = document.getElementById("li");
       element.insertBefore(para, child);
+      // document.getElementById("disc_"+count).hidden = false;
+      // document.getElementById("disc_"+count).innerHTML = percent_title;
+      // document.getElementById("disc_"+count).value = discounts[j].value;
+      // count +=1;
+      // console.log(discounts[j].value);
       } 
     }
   }
@@ -327,6 +338,17 @@ function add_altrans_dis(){
   element = document.getElementById("dis_ul0");
   child = document.getElementById("li");
   element.insertBefore(para, child);
+
+  document.getElementById("disc_0").hidden = false;
+  document.getElementById("disc_1").hidden = false;
+  document.getElementById("disc_0").innerHTML = '50% - Діти до 4 років'; 
+  let new_elem = document.getElementById("disc_0");
+  new_elem.value = '50';
+  document.getElementById("disc_1").innerHTML = '30% - Діти від 4 до 12 років'; 
+  new_elem = document.getElementById("disc_1");
+  new_elem.value = '30';
+  document.getElementById("disc_2").hidden=true; 
+  document.getElementById("disc_3").hidden=true; 
 }
 
 function add_grandes_dis(){
@@ -350,7 +372,22 @@ function add_grandes_dis(){
   element = document.getElementById("dis_ul0");
   child = document.getElementById("li");
   element.insertBefore(para, child);
-}
+
+  document.getElementById("disc_0").hidden = false;
+  document.getElementById("disc_1").hidden = false;
+  document.getElementById("disc_2").hidden = false;
+  document.getElementById("disc_0").innerHTML = '50% - Діти до 4 років'; 
+  let new_elem = document.getElementById("disc_0");
+  new_elem.value = '50';
+  document.getElementById("disc_1").innerHTML = '30% - Діти від 4 до 12 років'; 
+  new_elem = document.getElementById("disc_1");
+  new_elem.value = '30';
+  document.getElementById("disc_2").innerHTML = '10% - Пенсіонери від 60 років'; 
+  new_elem = document.getElementById("disc_2");
+  new_elem.value = '10';
+  document.getElementById("disc_3").hidden=true; 
+  }
+
 
 function add_klr_info(){
   let para = document.createElement("p");
@@ -535,7 +572,12 @@ const find_odri = async (first_word, second_word, date_form, currency,t_o) => {
     } else {
       document.getElementById("not_found").innerHTML ='Рейси з України до Італії та зворотньому напрямку відбуваються за певним графіком, до 4-х разів на тиждень. Будь ласка, оберіть іншу дату, або зателефонуйте диспетчеру.';
     }
-    document.getElementById("rec553549662").hidden=false;
+    if (document.getElementById("show0").hidden == false){
+      document.getElementById("rec553549662").hidden=true;
+    } else {
+      document.getElementById("rec553549662").hidden=false;
+    }
+    
 
   }
   
@@ -569,7 +611,12 @@ function func() {
 }
 
 function choose(num){
-  
+  let cities_italy = ["Андрія", "Анкона", "Барі","Бергамо", "Болонья", "Брешія", "Венеція", "Местре", "Верона","Віченца", 
+    "Казерта", "Капуа", "Кассіно", "Каянелло", "Комо", "Мілан", "Модена", "Неаполь", "Падуя", "Пезаро", "Пескара", 
+    "Равенна", "Реджо-Емілія", "Рим", "Ріміні", "Ровіго", "Салерно", "Сан-Бенедетто-дель-Тронто", "Трані","Удіне",
+     "Фаенца", "Феррара", "Флоренція", "Фоджа", "Чезена", "Черіньола", "Чивітанова-Марке", "Аліканте", "Альмерія", 
+     "Барселона", "Бенідорм", "Валенсія", "Жирона", "Кастельон де ла Плана", 
+     "Мадрид", "Малага", "Мурсія", "Севілія", "Таррагона", "Трієст", "Парма","П’яченца","Тортона","Генуя","Савона","Імперія"];
   let som = "start_city_name" + num;
   let start_city_name = document.getElementById(som).innerHTML;
   let som_end = "end_city_name" + num;
@@ -587,4 +634,46 @@ function choose(num){
   document.getElementById("arrival_info").innerHTML = document.getElementById("end_date" + num).innerHTML + ', '+ document.getElementById("end_time" + num).innerHTML;
 
   document.getElementById("arrival_address").innerHTML = document.getElementById("end_station"+num).innerHTML;
+  
+  
+  const selectElement = document.getElementById("input_1495810359387");
+  let first_price = document.getElementById("price"+num).innerHTML;
+  document.getElementById("sum").innerHTML = first_price;
+  selectElement.addEventListener("change", function() {
+    let dis_amount = 0;
+    if (document.getElementById('input_1495810359387').value != "0"){
+      document.getElementById('b_date').hidden = false;
+      dis_amount = (document.getElementById('input_1495810359387').value).slice(0, 2);
+      let percent = (100 - dis_amount)/100;
+      let newStr = first_price.replace(/,/g, "");
+      document.getElementById("sum").innerHTML = parseFloat(newStr)*percent;
+    } else {
+      document.getElementById('b_date').hidden = true;
+      document.getElementById("sum").innerHTML = document.getElementById("price"+num).innerHTML;
+    }
+  });
+  const select_elem = document.getElementById('input_1495810359387');
+
+// Удалить все элементы option
+while (select_elem.options.length > 0) {
+    select_elem.remove(0);
+}
+  const ulList = document.getElementById("dis_ul"+num);
+const select = document.getElementById("input_1495810359387");
+const option_1 = document.createElement("option");
+option_1.value = "0";
+option_1.text = "Повний квиток";
+  
+  select.add(option_1);
+for (let i = 0; i < ulList.children.length; i++) {
+  const listItem = ulList.children[i];
+  const text = listItem.textContent.trim();
+  
+  const option = document.createElement("option");
+  option.value = text;
+  option.text = text;
+  
+  select.add(option);
+}
+  
 }

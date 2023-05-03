@@ -4316,17 +4316,18 @@
                                           id="input_1495810359387" 
                                           class="t-select js-tilda-rule "
                                           style="color:#000000;border:1px solid #0099b9;border-radius: 30px; -moz-border-radius: 30px; -webkit-border-radius: 30px;font-family:'Georgia';">
-                                          <option value="0" >0</option>
-                                          <option value="Діти від 0 до 4 років" >Діти від 0 до 4 років</option>
-                                          <option value="Діти від 4 до 12 років" >Діти від 4 до 12 років</option>
-                                          <option value="Пенсіонери від 60 років" >Пенсіонери від 60 років</option>
+                                          <option value="0">Повний квиток</option>
+                                          <option value="Діти від 0 до 4 років"   id="disc_0">Діти від 0 до 4 років</option>
+                                          <option value="Діти від 4 до 12 років"  id="disc_1">Діти від 4 до 12 років</option>
+                                          <option value="Пенсіонери від 60 років" id="disc_2">Пенсіонери від 60 років</option>
+                                          <option value="Пенсіонери від 60 років" id="disc_3">Пенсіонери від 60 років</option>
                                        </select>
                                     </div>
                                     <div class="t-input-error" aria-live="polite" id="error_1495810359387"></div>
                                  </div>
                               </div>
-                              <div class="t-input-group t-input-group_da" data-input-lid="1495810410810" 
-                                 >
+                              <div class="t-input-group t-input-group_da" data-input-lid="1495810410810" id="b_date" hidden> 
+                                 
                                  <div class="t-input-subtitle t-descr t-descr_xxs t-opacity_70" data-redactor-toolbar="no" field="li_subtitle__1495810410810" style="">Дата народження</div>
                                  <div class="t-input-block">
                                     <div class="t-datepicker__wrapper">
@@ -4381,14 +4382,23 @@
                                  >
                                  <div class="t-input-block">
                                     <div class="t-text" field="li_text__1676873756849" >
-                                       <div style="font-size: 18px;" data-customstyle="yes"><strong>Додати пасажира</strong></div>
+                                       <div style="font-size: 18px;" data-customstyle="yes"><strong style="font-family: Georgia; font-size: 18px; color: rgb(0, 153, 185);"class="add_pas" id="create-form-button" >Додати пасажира</strong></div>
                                     </div>
                                     <div class="t-input-error" aria-live="polite" id="error_1676873756849"></div>
                                  </div>
                               </div>
+                              
+                              <div id="form-container"></div>
+                              <style>
+                                 .add_pas:hover{
+                                    color: #ff6800 !important;
+                                 }
+                              </style>
+                              
                               <div class="t-input-group t-input-group_ph" data-input-lid="1676892351304" 
                                  role="radiogroup"
                                  >
+                                 <div id="form-container"></div>
                                  <div class="t-input-subtitle t-descr t-descr_xxs t-opacity_70" data-redactor-toolbar="no" field="li_subtitle__1676892351304" style="">Номер телефону</div>
                                  <div class="t-input-block">
                                     <input type="tel" 
@@ -4445,7 +4455,7 @@
                                  <div class="t-input-subtitle t-descr t-descr_xxs t-opacity_70" data-redactor-toolbar="no" field="li_subtitle__1676897766768" style="">Попередня сума до сплати водієві:</div>
                                  <div class="t-input-block">
                                     <input type="hidden" class="t-calc__hiddeninput js-tilda-rule" name="Сума:" tabindex="-1" value="0">
-                                    <div class="t-calc__wrapper t-name t-name_md" style=" font-family: 'Georgia';"><span class="t-calc" data-calc-expr="">0</span></div>
+                                    <div class="t-calc__wrapper t-name t-name_md" style=" font-family: 'Georgia';"><span class="t-calc" data-calc-expr="" id="sum">0</span></div>
                                     <script src="js/tilda-calc-1.0.min.js"></script><script type="text/javascript">t_onReady(function () {
                                        try {
                                        t_onFuncLoad('tcalc__init', function () {
@@ -4841,6 +4851,7 @@
       </div>
       <script src="b.js"></script>
       <script src="new.js"></script>
+      <script src="add_pas.js"></script>
       <script src="autocomplete.js"></script>
       <script>
          document.addEventListener('DOMContentLoaded', function() {
